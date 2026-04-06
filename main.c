@@ -73,6 +73,41 @@ int calculateMinRun(int n){
 }
 
 
+void findRuns(int *v, int n){
+
+    int i = 0;
+    int minRun =calculateMinRun(n);
+
+    while(i < n){
+
+        int start = i;
+
+        while(i < n-1 && v[i] <= v[i+1]){
+            i++;
+        }
+
+        int end = i;
+
+        int runSize = end - start + 1;
+
+        if(runSize < minRun){
+
+            int newEnd = start + minRun - 1;
+
+            if(newEnd >= n)
+                newEnd = n-1;
+
+            insertionSort(v, start, newEnd);
+
+            end = newEnd;
+        }
+
+        i = end + 1;
+    }
+}
+
+
+
 int main(){
 
 
