@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+void inverteArray(int *v, int start, int end);
+
 
 void insertionSort (int *v, int left, int right){
 
@@ -15,7 +17,8 @@ void insertionSort (int *v, int left, int right){
     }
 }
 
-void mergeSort (int *v, int start, int mid, int end){
+void merge (int *v, int start, int mid, int end){
+
 
     int n1 = mid - start +1;
     int n2 = end - mid;
@@ -75,20 +78,37 @@ int calculateMinRun(int n){
 
 void findRuns(int *v, int n){
 
+    int end;
     int i = 0;
-    int minRun =calculateMinRun(n);
+    int minRun = calculateMinRun(n);
 
     while(i < n){
 
         int start = i;
 
-        while(i < n-1 && v[i] <= v[i+1]){
-            i++;
+
+        if(i < n-1 && v[i] > v[i+1]){
+
+            while(i < n-1 && v[i] > v[i+1]){
+                i++;
+            }
+
+            end = i;
+
+            inverteArray(v, start, end);
+
+        }
+        else{
+
+            while(i < n-1 && v[i] <= v[i+1]){
+                i++;
+            }
+
         }
 
-        int end = i;
-
+        end = i;
         int runSize = end - start + 1;
+
 
         if(runSize < minRun){
 
@@ -106,6 +126,19 @@ void findRuns(int *v, int n){
     }
 }
 
+void inverteArray(int *v, int start, int end){
+
+    int aux;
+
+    while(start < end){
+        aux = v[start];
+        v[start] = v[end];
+        v[end] = aux;
+
+        start++;
+        end--;
+    }
+}
 
 
 int main(){
